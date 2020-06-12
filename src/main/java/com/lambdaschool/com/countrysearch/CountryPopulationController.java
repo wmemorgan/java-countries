@@ -29,28 +29,28 @@ public class CountryPopulationController {
     // /min
     @GetMapping(value = "/min",
             produces = {"application/json"})
-    public ResponseEntity<?> getSmallestPopulatedCountry() {
+    public ResponseEntity<?> getMinPopulatedCountry() {
         CountrysearchApplication
                 .ourCountryList
                 .countryList
                 .sort((c1, c2) -> (int)(c1.getPopulation() - c2.getPopulation()));
 
-        Country smallestCountry = CountrysearchApplication.ourCountryList.countryList.get(0);
+        Country minCountry = CountrysearchApplication.ourCountryList.countryList.get(0);
 
-        return new ResponseEntity<>(smallestCountry, HttpStatus.OK);
+        return new ResponseEntity<>(minCountry, HttpStatus.OK);
     }
 
     // /max
-//    @GetMapping(value = "/size/{number}",
-//            produces = {"application/json"})
-//    public ResponseEntity<?> getCountriesByNameLength(@PathVariable int number) {
-//        List<Country> countries = CountrysearchApplication
-//                .ourCountryList
-//                .filterCountries(c ->
-//                        c.getName().length() >= number);
-//
-//        countries.sort((a1, a2) -> a1.getName().compareToIgnoreCase(a2.getName()));
-//
-//        return new ResponseEntity<>(countries, HttpStatus.OK);
-//    }
+    @GetMapping(value = "/max",
+            produces = {"application/json"})
+    public ResponseEntity<?> getMaxPopulatedCountry() {
+        CountrysearchApplication
+                .ourCountryList
+                .countryList
+                .sort((c1, c2) -> (int)(c2.getPopulation() - c1.getPopulation()));
+
+        Country maxCountry = CountrysearchApplication.ourCountryList.countryList.get(0);
+
+        return new ResponseEntity<>(maxCountry, HttpStatus.OK);
+    }
 }
