@@ -41,18 +41,18 @@ public class CountryAgeController {
 
         return new ResponseEntity<>(minCountry, HttpStatus.OK);
     }
-//
-//    // /max
-//    @GetMapping(value = "/max",
-//            produces = {"application/json"})
-//    public ResponseEntity<?> getMaxPopulatedCountry() {
-//        CountrysearchApplication
-//                .ourCountryList
-//                .countryList
-//                .sort((c1, c2) -> (int)(c2.getPopulation() - c1.getPopulation()));
-//
-//        Country maxCountry = CountrysearchApplication.ourCountryList.countryList.get(0);
-//
-//        return new ResponseEntity<>(maxCountry, HttpStatus.OK);
-//    }
+
+    // /max
+    @GetMapping(value = "/max",
+            produces = {"application/json"})
+    public ResponseEntity<?> getMaxAge() {
+        CountrysearchApplication
+                .ourCountryList
+                .countryList
+                .sort((c1, c2) -> (c2.getMedianAge() - c1.getMedianAge()));
+
+        Country maxCountry = CountrysearchApplication.ourCountryList.countryList.get(0);
+
+        return new ResponseEntity<>(maxCountry, HttpStatus.OK);
+    }
 }
