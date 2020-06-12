@@ -39,4 +39,16 @@ public class CountryNamesController {
     }
 
     // /size/{number}
+    @GetMapping(value = "/size/{number}",
+            produces = {"application/json"})
+    public ResponseEntity<?> getCountriesByNameLength(@PathVariable int number) {
+        List<Country> countries = CountrysearchApplication
+                .ourCountryList
+                .filterCountries(c ->
+                        c.getName().length() >= number);
+
+        countries.sort((a1, a2) -> a1.getName().compareToIgnoreCase(a2.getName()));
+
+        return new ResponseEntity<>(countries, HttpStatus.OK);
+    }
 }
