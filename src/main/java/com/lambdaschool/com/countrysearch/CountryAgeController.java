@@ -29,18 +29,18 @@ public class CountryAgeController {
     }
 
     // /min
-//    @GetMapping(value = "/min",
-//            produces = {"application/json"})
-//    public ResponseEntity<?> getMinPopulatedCountry() {
-//        CountrysearchApplication
-//                .ourCountryList
-//                .countryList
-//                .sort((c1, c2) -> (int)(c1.getPopulation() - c2.getPopulation()));
-//
-//        Country minCountry = CountrysearchApplication.ourCountryList.countryList.get(0);
-//
-//        return new ResponseEntity<>(minCountry, HttpStatus.OK);
-//    }
+    @GetMapping(value = "/min",
+            produces = {"application/json"})
+    public ResponseEntity<?> getMinAge() {
+        CountrysearchApplication
+                .ourCountryList
+                .countryList
+                .sort((c1, c2) -> (c1.getMedianAge() - c2.getMedianAge()));
+
+        Country minCountry = CountrysearchApplication.ourCountryList.countryList.get(0);
+
+        return new ResponseEntity<>(minCountry, HttpStatus.OK);
+    }
 //
 //    // /max
 //    @GetMapping(value = "/max",
