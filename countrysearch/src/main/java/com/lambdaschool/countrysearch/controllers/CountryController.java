@@ -2,7 +2,6 @@ package com.lambdaschool.countrysearch.controllers;
 
 import com.lambdaschool.countrysearch.models.Country;
 import com.lambdaschool.countrysearch.repositories.CountryRepository;
-import org.hibernate.annotations.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +30,7 @@ public class CountryController {
         return tempList;
     }
 
+    // http://localhost:2019/names/all
     @GetMapping(value="/names/all", produces = "application/json")
     public ResponseEntity<?> listCountriesByName() {
         List<Country> myList = new ArrayList<>();
@@ -41,6 +41,7 @@ public class CountryController {
         return new ResponseEntity<>(myList, HttpStatus.OK);
     }
 
+    // http://localhost:2019/names/start/u
     @GetMapping(value = "/names/start/{letter}", produces = "application/json")
     public ResponseEntity<?> listAllByFirstName(@PathVariable char letter) {
         List<Country> myList = new ArrayList<>();
@@ -54,6 +55,7 @@ public class CountryController {
         return new ResponseEntity<>(filteredList, HttpStatus.OK);
     }
 
+    // http://localhost:2019/population/total
     @GetMapping(value = "/population/total", produces = "application/json")
     public ResponseEntity<?> getTotalPopulation() {
         List<Country> myList = new ArrayList<>();
@@ -67,5 +69,31 @@ public class CountryController {
         System.out.println("The Total Population is " + sum);
 
         return new ResponseEntity<>(sum, HttpStatus.OK);
+    }
+
+    // http://localhost:2019/population/min
+    @GetMapping(value = "/population/min", produces = "application/json")
+    public ResponseEntity<?> getMinPopulation() {
+        List<Country> myList = new ArrayList<>();
+
+        countryRepository.findAll().iterator().forEachRemaining(myList::add);
+
+        myList.sort((c1, c2) -> (int)(c1.getPopulation() - c2.getPopulation()));
+        Country minPopulation = myList.get(0);
+
+        return new ResponseEntity<>(minPopulation, HttpStatus.OK);
+    }
+
+    // http://localhost:2019/population/max
+    @GetMapping(value = "/population/max", produces = "application/json")
+    public ResponseEntity<?> getMaxPopulation() {
+        List<Country> myList = new ArrayList<>();
+
+        countryRepository.findAll().iterator().forEachRemaining(myList::add);
+
+        myList.sort((c1, c2) -> (int)(c1.getPopulation() - c2.getPopulation()));
+        Country maxPopulation = myList.get(myList.size()-1);
+
+        return new ResponseEntity<>(maxPopulation, HttpStatus.OK);
     }
 }
