@@ -53,4 +53,19 @@ public class CountryController {
 
         return new ResponseEntity<>(filteredList, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/population/total", produces = "application/json")
+    public ResponseEntity<?> getTotalPopulation() {
+        List<Country> myList = new ArrayList<>();
+
+        countryRepository.findAll().iterator().forEachRemaining(myList::add);
+
+        Long sum = myList.stream()
+                .map(c -> c.getPopulation())
+                .reduce(0L, Long::sum);
+
+        System.out.println("The Total Population is " + sum);
+
+        return new ResponseEntity<>(sum, HttpStatus.OK);
+    }
 }
